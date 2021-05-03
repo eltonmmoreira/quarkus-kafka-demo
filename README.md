@@ -7,7 +7,7 @@ Clone o repositório:
 Serviços construídos para demo das tecnologias abaixo. A aplicação simula ordens de compra e venda de ativos e um balanço com o total dos ativos por conta.
 O serviço assets-order é responsável por criar as ordens, gravar em um banco de dados e enviar a um tópico do kafka, onde o serviço 
 assets-balance recebe a mensagem e então cria ou atualiza um consolidado por ativo e conta, gravando em outro banco. 
-O serviços tem a responsabilidade divida, um que somente gravar as ordens e outro que realiza a leitura. 
+O serviços tem a responsabilidade dividida, um que somente gravar as ordens e outro que realiza a leitura. 
 
 Tecnologias:
 - Quarkus,
