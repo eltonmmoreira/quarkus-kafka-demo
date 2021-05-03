@@ -18,7 +18,6 @@ mp:
       orders:
         bootstrap:
           servers: strimzi-cluster-operator.kafka.svc.cluster.local:9092
-#          servers: strimzi-cluster-operator.kafka.svc.cluster.local:9092
         connector: smallrye-kafka
         topic: orders-topic
         value:

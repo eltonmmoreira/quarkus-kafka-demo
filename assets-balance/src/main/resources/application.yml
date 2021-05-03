@@ -1,12 +1,15 @@
 quarkus:
-  http:
-    port: 9091
+  application:
+    name: assets-balance
+    http:
+      root-path: /balance
+      port: ${PORT:9091}
   datasource:
     db-kind: postgresql
     jdbc:
-      url: jdbc:postgresql://localhost:5433/balance
-    username: balance
-    password: balance123
+      url: ${POSTGRES_URL:jdbc:postgresql://localhost:5433/balance}
+    username: ${POSTGRES_USER:balance}
+      password: ${POSTGRES_PASSWORD:balance123}
   flyway:
     migrate-at-start: true
 mp:
