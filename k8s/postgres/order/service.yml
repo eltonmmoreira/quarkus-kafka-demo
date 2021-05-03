@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: assets-order-postgres
+  namespace: postgres
+spec:
+  selector:
+    app: assets-order-postgres
+  ports:
+    - port: 5432
+  type: ClusterIP

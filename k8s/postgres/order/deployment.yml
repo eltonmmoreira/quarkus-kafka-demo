@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assets-order-postgres
+  namespace: postgres
+spec:
+  selector:
+    matchLabels:
+      app: assets-order-postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: assets-order-postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:10.4
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: assets-order-postgres
+      volumes:
+        - name: assets-order-postgres
+          persistentVolumeClaim:
+            claimName: assets-order-postgres

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assets-order
+  namespace: dev
+  labels:
+    app: assets-order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: assets-order
+  template:
+    metadata:
+      labels:
+        app: assets-order
+    spec:
+      containers:
+        - name: assets-order
+          image: eltonmmoreira/assets-order:1.0.0-SNAPSHOT
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          envFrom:
+            - configMapRef:
+                name: assets-order-config
+          livenessProbe:
+            httpGet:
+              path: /order/q/health/live
+              port: 8080
+            initialDelaySeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /order/q/health/ready
+              port: 8080
+            initialDelaySeconds: 30
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "0.5"
+            limits:
+              memory: "1024Mi"
+              cpu: "1"

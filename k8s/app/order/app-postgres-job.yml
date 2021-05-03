@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: database-create
+  namespace: dev
+spec:
+  template:
+    spec:
+      containers:
+      - name: database-create
+        image: postgres:11-alpine
+        command:
+          - sh
+          - -c
+          - >
+              while ! pg_isready -U postgres -h assets-order-postgres.postgres.svc.cluster.local; do sleep 1; done;
+              echo "${SQLCOMMAND}" | psql --file=- --echo-queries -d "${ACCESS_SVC_CONNSTR}" \
+                --set ON_ERROR_STOP=1 \
+                --set dbname="${POSTGRES_DATABASE_NAME}" \
+                --set user="${POSTGRES_USER}" \
+                --set pass="${POSTGRES_PASSWORD}"
+        envFrom:
+            - configMapRef:
+                name: assets-order-config
+        env:
+          - name: ACCESS_SVC_CONNSTR
+            value: host=assets-order-postgres.postgres.svc.cluster.local user=postgres connect_timeout=3 sslmode=disable
+          - name: SQLCOMMAND
+            value: |
+              SELECT format('CREATE DATABASE %I;', :'dbname')
+              WHERE NOT EXISTS (
+                 SELECT
+                   FROM pg_database
+                  WHERE datname=:'dbname'
+              );
+              \gexec
+              \c :"dbname"
+      restartPolicy: OnFailure

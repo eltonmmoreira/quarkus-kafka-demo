@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: assets-order-config
+  namespace: dev
+data:
+  POSTGRES_URL: "jdbc:postgresql://assets-order-postgres.postgres.svc.cluster.local:5432/orders"
+  POSTGRES_USER: "postgres"
+  POSTGRES_DATABASE_NAME: "orders"
+  POSTGRES_PASSWORD: "postgres"
+  PORT: "8080"

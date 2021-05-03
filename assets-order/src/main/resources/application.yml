@@ -1,12 +1,15 @@
 quarkus:
+  application:
+    name: assets-order
   http:
-    port: 9090
+    root-path: /order
+    port: ${PORT:9090}
   datasource:
     db-kind: postgresql
     jdbc:
-      url: jdbc:postgresql://localhost:5432/orders
-    username: orders
-    password: orders123
+      url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/orders}
+    username: ${POSTGRES_USER:orders}
+    password: ${POSTGRES_PASSWORD:orders123}
   flyway:
     migrate-at-start: true
 mp:

@@ -65,13 +65,13 @@ public class Order extends PanacheEntityBase {
     @Override
     public void persist() {
         super.persist();
-        postSave.accept(new OrderEvent(
-                ticker,
-                operation,
-                quantity,
-                totalPrice,
-                accountId)
-        );
+//        postSave.accept(new OrderEvent(
+//                ticker,
+//                operation,
+//                quantity,
+//                totalPrice,
+//                accountId)
+//        );
     }
 
     @PrePersist

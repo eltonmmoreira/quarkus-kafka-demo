@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: assets-order
+  namespace: dev
+spec:
+  selector:
+    app: assets-order
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
