@@ -9,6 +9,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Path("/balance")
 public class BalanceResource {
@@ -25,14 +27,14 @@ public class BalanceResource {
                                     r.totalPrice,
                                     r.averagePrice,
                                     r.accountId)
-                );
+                ).collect(Collectors.toList());
         return Response.ok(response).build();
     }
 
     @POST
     @Produces("application/json")
     @Transactional
-    public void create(@RequestBody OrderEvent event) {
+    public Response create(@RequestBody OrderEvent event) {
         var balance = Balance.builder()
                 .ticker(event.ticker)
                 .quantity(event.quantity)
@@ -40,7 +42,6 @@ public class BalanceResource {
                 .accountId(event.accountId)
                 .build()
                 .registerBalance(event.operation);
-
-        System.out.println(balance);
+        return Response.status(Response.Status.CREATED).build();
     }
 }

@@ -12,12 +12,8 @@ import java.util.Optional;
 @Entity
 @Table(name = "BALANCE", uniqueConstraints = {
         @UniqueConstraint(
-                name = "UNQ_TICKER",
-                columnNames = {"TICKER"}
-        ),
-        @UniqueConstraint(
-                name = "UNQ_ACCOUNT_ID",
-                columnNames = {"ACCOUNT_ID"}
+                name = "UNQ_TICKER_ACCOUNT_ID",
+                columnNames = {"TICKER", "ACCOUNT_ID"}
         )
 })
 public class Balance extends PanacheEntity {
